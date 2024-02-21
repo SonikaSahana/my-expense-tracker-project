@@ -19,7 +19,7 @@ async function createUser(e){
             email : e.target.email.value,
             password : e.target.password.value,
         }
-        const res = await axiosInstance.post('/createUser' , data)
+        const res = await axiosInstance.post('/user/createUser' , data)
 
 
         console.log(res)

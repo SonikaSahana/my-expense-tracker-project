@@ -1,6 +1,6 @@
 const express = require('express')
 const path=require("path");
-//const bcrypt = require('bcrypt');
+const bcrypt = require('bcrypt');
 //const jwt = require('jsonwebtoken')
 
 exports.signupPage = (req,res,next) => {
@@ -18,7 +18,7 @@ else
     }
 }
 
-exports.createUser = async (req,res)=>{
+exports.createUser = async (req,res) => {
     try{
 const {name,email,password}=req.body;
 console.log("email",email)
@@ -28,13 +28,12 @@ if(isStringValid(name)||isStringValid(email)||isStringValid(password))
 }
 await User.create({name,email,password})
 return res.status(201).json({message:"successfully create new user"})
-    }
-
-catch(err){
+    } catch(err){
     res.status(500).json(err)
 }
 }
-const login=async(req,res)=>{
+
+exports.login=async(req,res)=>{
     try{
         const{email,password}=req.body;
         if(isStringValid(email)||isStringValid(password)){
@@ -43,13 +42,19 @@ const login=async(req,res)=>{
         console.log(password)
         const user=await user.findAll({where:{email}})
         if(user.length>0){
-            if(user[0].password===password){
+            bcrypt.compare(password,user[0].password,(err,result)=>{
+                if(err){
+                    res.status(500).json({message:"something went wrong",success:false})
+                }
+                if(result===true){
                 res.status(200).json({message:"user logged in succesfully",success:true})
             }
             else{
                 return res.status(400).json({message:'password is incorrect',success:false})
             }
-        }
+        })
+    }
+    
         else{
             return res.status(404).json({message:'user does not exist',success:false})
         }
@@ -59,6 +64,7 @@ const login=async(req,res)=>{
     }
     
 }
+
     
 //     const name = req.body.name;
 //     const email = req.body.email;
