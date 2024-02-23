@@ -1,6 +1,5 @@
-
-const axiosInstance = axios.create({
-    baseURL : "http://3.27.133.80/user"
+const axiosInstance = q.create({
+    baseURL : "http://localhost:4001/user"
     // httpsAgent: new https.Agent({  
     //     rejectUnauthorized: false
     // })
@@ -19,9 +18,10 @@ async function createUser(e){
             email : e.target.email.value,
             password : e.target.password.value,
         }
-        const res = await axiosInstance.post('/user/createUser' , data)
 
+        const res = await axiosInstance.post('/createUser', data)
 
+        console.log("Print 7")
         console.log(res)
         e.target.name.value = ""
         e.target.email.value = ""
