@@ -266,7 +266,7 @@ async function purchaseMembeship(e) {
 
 
 
-
+//for pagination
 document.querySelector('.page').addEventListener('click' , async(e)=>{
     try{
         const items = +localStorage.getItem('totalItems') || 5
