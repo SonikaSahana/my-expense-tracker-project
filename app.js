@@ -1,8 +1,11 @@
 
 const express=require("express")
+const fs= require("fs")
 const path = require('path')
 const router = express.Router();
 const app = express()
+const helmet=require("helmet")
+const morgan=require("morgan")
 const sequelize = require('./backend/util/db')
 // user/signup
 
@@ -28,8 +31,11 @@ const Download = require('./backend/models/download')
 const passwordRoutes = require('./backend/routes/forgot-password')
 const resetPassword = require('./backend/models/resetPassword')
 const reportRoutes = require('./backend/routes/report')
+const accessLogStream = fs.createWriteStream(path.join(__dirname , 'access.log'),{flags : 'a'})
 app.use(express.json())
-
+app.use(helmet());
+app.use(morgan(combined, {stream:accessLogStream}));
+ṣ
 app.use('/user' ,userRoutes )
 app.use('/expense' , expenseRoutes)
 app.use('/payment' , paymentsRoutes)

@@ -1,0 +1,9 @@
+{
+    "env":{
+        "JWT-TOKEN":
+        "RAZORPAY_KEY_ID":           
+        "RAZORPAY_KEY_SECRET": 
+        "BREVO_API_KEY" :          
+
+    }
+}
